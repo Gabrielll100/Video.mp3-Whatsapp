@@ -7,213 +7,260 @@
   <meta name="theme-color" content="#075E54">
   <title>WhatsApp</title>
 
-  <style>
-    :root {
-      --green-dark: #075E54;
-      --green: #128C7E;
-      --green-light: #25D366;
-      --page: #e9edef;
-      --text: #202c33;
-      --muted: #667781;
-      --border: #dce3e7;
-    }
+ 
+<style>
+  :root {
+    --green-dark: #075e54;
+    --green: #128c7e;
+    --green-light: #25d366;
+    --page: #edf7f5;
+    --text: #202c33;
+    --muted: #667781;
+    --border: #dce5e8;
+  }
 
-    * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: var(--page);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Arial, sans-serif;
+  }
+
+  .app {
+    width: min(100%, 460px);
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 18px 55px rgba(0, 65, 52, 0.14);
+  }
+
+  .header {
+    padding: 32px 24px 28px;
+    text-align: center;
+    background: linear-gradient(145deg, #087765, #005b4e);
+    color: #fff;
+  }
+
+  .logo {
+    display: grid;
+    place-items: center;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 16px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--green-light);
+  }
+
+  .logo svg {
+    width: 53px;
+    height: 53px;
+  }
+
+  .logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .header h1 {
+    margin: 0;
+    font-size: clamp(25px, 5vw, 32px);
+    font-weight: 750;
+    letter-spacing: -.5px;
+  }
+
+  .header p {
+    margin: 10px 0 0;
+    color: #d5f3e7;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .content {
+    padding: 28px 25px;
+  }
+
+  .eyebrow {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 0 0 9px;
+  }
+
+  h2 {
+    margin: 0 0 10px;
+    font-size: 23px;
+  }
+
+  .description {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 0 0 25px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 650;
+    margin: 0 0 9px;
+  }
+
+  select,
+  input {
+    width: 100%;
+    min-width: 0;
+    min-height: 54px;
+    padding: 14px 13px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    outline: none;
+  }
+
+  select:focus,
+  input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(18, 140, 126, .12);
+  }
+
+  .field {
+    margin-bottom: 20px;
+  }
+
+  .phone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #fff;
+  }
+
+  .phone:focus-within {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(18, 140, 126, .12);
+  }
+
+  .dial {
+    flex-shrink: 0;
+    padding-right: 10px;
+    border-right: 1px solid var(--border);
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .phone input {
+    border: 0;
+    box-shadow: none;
+    padding: 15px 0;
+    min-height: 52px;
+    letter-spacing: 1px;
+  }
+
+  .phone input:focus {
+    border: 0;
+    box-shadow: none;
+  }
+
+  .hint {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  button {
+    width: 100%;
+    min-height: 54px;
+    padding: 15px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #08bd58, #00a94f);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: filter .2s ease, transform .2s ease;
+  }
+
+  button:hover {
+    filter: brightness(1.05);
+  }
+
+  button:active {
+    transform: scale(.99);
+  }
+
+  #result {
+    margin-top: 17px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #f0f7f3;
+    color: #075e54;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  #result:empty {
+    display: none;
+  }
+
+  .footer {
+    padding: 16px 20px;
+    border-top: 1px solid #edf0f2;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background: var(--page);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
+      padding: 10px;
     }
 
     .app {
       width: 100%;
-      max-width: 440px;
-      background: white;
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: 0 15px 50px #182c3518;
+      border-radius: 20px;
     }
 
     .header {
-      padding: 28px 20px 25px;
-      text-align: center;
-      background: var(--green-dark);
-      color: white;
+      padding: 27px 19px 24px;
     }
 
-    .logo {
-      display: grid;
-      place-items: center;
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 14px;
-      border-radius: 50%;
-      background: var(--green-light);
+    .content {
+      padding: 24px 19px;
     }
+  }
 
-    .logo svg {
-      width: 53px;
-      height: 53px;
-    }
-
-.logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
+  @media (max-width: 360px) {
     .header h1 {
-      margin: 0;
-      font-size: 26px;
-      letter-spacing: -.5px;
-    }
-
-    .header p {
-      margin: 9px 0 0;
-      color: #d5f3e7;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .content { padding: 27px 24px; }
-
-    .eyebrow {
-      color: var(--green);
-      font-size: 11px;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin: 0 0 9px;
-    }
-
-    h2 {
-      margin: 0 0 10px;
       font-size: 23px;
     }
 
-    .description {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-      margin: 0 0 25px;
+    .content {
+      padding: 22px 16px;
     }
-
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin: 0 0 9px;
-    }
-
-    select, input {
-      width: 100%;
-      min-width: 0;
-      padding: 14px 12px;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      background: white;
-      color: var(--text);
-      font: inherit;
-      outline: none;
-    }
-
-    select:focus, input:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px #128c7e18;
-    }
-
-    .field { margin-bottom: 19px; }
-
-    .phone {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 0 11px;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-    }
-
-    .phone:focus-within {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px #128c7e18;
-    }
-
-    .dial {
-      flex-shrink: 0;
-      padding-right: 10px;
-      border-right: 1px solid var(--border);
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    .phone input {
-      border: 0;
-      box-shadow: none;
-      padding: 15px 0;
-      letter-spacing: 1px;
-    }
-
-    .phone input:focus {
-      border: 0;
-      box-shadow: none;
-    }
-
-    .hint {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    button {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 11px;
-      background: var(--green-light);
-      color: #064d31;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background .2s;
-    }
-
-    button:hover { background: #20c45e; }
-
-    #result {
-      margin-top: 17px;
-      padding: 12px;
-      border-radius: 10px;
-      background: #f0f7f3;
-      color: #075e54;
-      font-size: 13px;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
-    }
-
-    #result:empty { display: none; }
-
-    .footer {
-      padding: 15px 20px;
-      border-top: 1px solid #edf0f2;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.6;
-      text-align: center;
-    }
-
-    @media (max-width: 360px) {
-      .content { padding: 23px 17px; }
-      .header h1 { font-size: 23px; }
-    }
-  </style>
+  }
+</style>
 </head>
 
 
