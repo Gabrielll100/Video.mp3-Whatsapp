@@ -8,6 +8,7 @@
   <title>WhatsApp</title>
 
  
+
 <style>
   :root {
     --green-dark: #075e54;
@@ -23,35 +24,72 @@
     box-sizing: border-box;
   }
 
-  
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: linear-gradient(
-    135deg,
-    #f4faf9 0%,
-    #e7f5f1 55%,
-    #d9f2e9 100%
-  );
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Arial, sans-serif;
-}
- .app {
-    width: min(100%, 460px);
-    background: #fff;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 18px 55px rgba(0, 65, 52, 0.14);
+  html {
+    min-height: 100%;
+    background: var(--page);
   }
 
+  body {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 24px;
+    overflow-x: hidden;
+    background: linear-gradient(
+      135deg,
+      #f4faf9 0%,
+      #e7f5f1 55%,
+      #d9f2e9 100%
+    );
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Arial, sans-serif;
+  }
+
+  /* Fondo con dibujos originales de mensajería */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.32;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180' fill='none' stroke='%2386cbb3' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M25 22a15 15 0 0 1 15 15v8l-7-3a15 15 0 1 1-8-20Z'/%3E%3Cpath d='M108 27h28a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8h-10l-8 7v-7h-10a8 8 0 0 1-8-8V35a8 8 0 0 1 8-8Z'/%3E%3Cpath d='M35 113a14 14 0 1 0 28 0 14 14 0 1 0-28 0Z'/%3E%3Cpath d='M43 112h1m10 0h1m-11 6q5 5 10 0'/%3E%3Cpath d='M112 105q-8 0-8 8v10q0 8 8 8h4l8 7v-7h9q8 0 8-8v-10q0-8-8-8Z'/%3E%3Cpath d='M117 115h14m-14 6h9'/%3E%3Ccircle cx='90' cy='83' r='3'/%3E%3Ccircle cx='19' cy='160' r='3'/%3E%3Ccircle cx='160' cy='85' r='4'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 180px 180px;
+  }
+
+  /* Tarjeta principal */
+  .app {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 26px;
+    box-shadow:
+      0 24px 65px rgba(25, 76, 61, 0.13),
+      0 5px 18px rgba(25, 76, 61, 0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Encabezado verde */
   .header {
     padding: 32px 24px 28px;
     text-align: center;
-    background: linear-gradient(145deg, #087765, #005b4e);
+    background: linear-gradient(
+      145deg,
+      #128c7e 0%,
+      #087765 48%,
+      #005b4e 100%
+    );
     color: #fff;
   }
 
@@ -61,9 +99,11 @@ body {
     width: 84px;
     height: 84px;
     margin: 0 auto 16px;
-    border-radius: 22px;
     overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
     background: var(--green-light);
+    box-shadow: 0 8px 22px rgba(0, 40, 30, 0.18);
   }
 
   .logo svg {
@@ -72,17 +112,18 @@ body {
   }
 
   .logo-img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    display: block;
   }
 
   .header h1 {
     margin: 0;
     font-size: clamp(25px, 5vw, 32px);
     font-weight: 750;
-    letter-spacing: -.5px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
   }
 
   .header p {
@@ -92,40 +133,43 @@ body {
     line-height: 1.6;
   }
 
+  /* Contenido del formulario */
   .content {
     padding: 28px 25px;
   }
 
   .eyebrow {
+    margin: 0 0 9px;
     color: var(--green);
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    margin: 0 0 9px;
   }
 
   h2 {
     margin: 0 0 10px;
     font-size: 23px;
+    line-height: 1.3;
   }
 
   .description {
+    margin: 0 0 25px;
     color: var(--muted);
     font-size: 14px;
     line-height: 1.65;
-    margin: 0 0 25px;
   }
 
   label {
     display: block;
+    margin: 0 0 9px;
     font-size: 13px;
     font-weight: 650;
-    margin: 0 0 9px;
   }
 
   select,
   input {
+    display: block;
     width: 100%;
     min-width: 0;
     min-height: 54px;
@@ -136,46 +180,58 @@ body {
     color: var(--text);
     font: inherit;
     outline: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   select:focus,
   input:focus {
     border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(18, 140, 126, .12);
+    box-shadow: 0 0 0 3px rgba(18, 140, 126, 0.12);
   }
 
   .field {
     margin-bottom: 20px;
   }
 
+  /* Campo del número */
   .phone {
     display: flex;
     align-items: center;
     gap: 10px;
+    min-width: 0;
     padding: 0 12px;
     border: 1px solid var(--border);
     border-radius: 13px;
     background: #fff;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .phone:focus-within {
     border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(18, 140, 126, .12);
+    box-shadow: 0 0 0 3px rgba(18, 140, 126, 0.12);
   }
 
   .dial {
     flex-shrink: 0;
     padding-right: 10px;
     border-right: 1px solid var(--border);
-    font-weight: bold;
+    font-weight: 700;
     white-space: nowrap;
   }
 
   .phone input {
-    border: 0;
-    box-shadow: none;
-    padding: 15px 0;
+    flex: 1;
+    width: 100%;
+    min-width: 0;
     min-height: 52px;
+    padding: 15px 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
     letter-spacing: 1px;
   }
 
@@ -191,7 +247,9 @@ body {
     line-height: 1.5;
   }
 
+  /* Botón principal */
   button {
+    display: block;
     width: 100%;
     min-height: 54px;
     padding: 15px;
@@ -202,20 +260,32 @@ body {
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    transition: filter .2s ease, transform .2s ease;
+    box-shadow: 0 7px 18px rgba(0, 180, 80, 0.15);
+    transition:
+      filter 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   button:hover {
     filter: brightness(1.05);
+    box-shadow: 0 9px 22px rgba(0, 180, 80, 0.22);
   }
 
   button:active {
-    transform: scale(.99);
+    transform: scale(0.99);
   }
 
+  button:focus-visible {
+    outline: 3px solid rgba(18, 140, 126, 0.35);
+    outline-offset: 3px;
+  }
+
+  /* Mensajes de resultado */
   #result {
     margin-top: 17px;
-    padding: 12px;
+    padding: 13px;
+    border: 1px solid #dceee4;
     border-radius: 12px;
     background: #f0f7f3;
     color: #075e54;
@@ -228,6 +298,7 @@ body {
     display: none;
   }
 
+  /* Pie de tarjeta */
   .footer {
     padding: 16px 20px;
     border-top: 1px solid #edf0f2;
@@ -237,14 +308,16 @@ body {
     text-align: center;
   }
 
+  /* Adaptación a móviles */
   @media (max-width: 480px) {
     body {
-      padding: 10px;
+      display: grid;
+      padding: 12px;
     }
 
     .app {
-      width: 100%;
-      border-radius: 20px;
+      max-width: 440px;
+      border-radius: 22px;
     }
 
     .header {
@@ -254,9 +327,27 @@ body {
     .content {
       padding: 24px 19px;
     }
+
+    .logo {
+      width: 78px;
+      height: 78px;
+      border-radius: 22px;
+    }
+
+    .header p {
+      font-size: 13px;
+    }
   }
 
   @media (max-width: 360px) {
+    body {
+      padding: 8px;
+    }
+
+    .app {
+      border-radius: 19px;
+    }
+
     .header h1 {
       font-size: 23px;
     }
@@ -264,176 +355,28 @@ body {
     .content {
       padding: 22px 16px;
     }
+
+    .phone {
+      gap: 7px;
+      padding: 0 9px;
+    }
+
+    .dial {
+      padding-right: 7px;
+    }
   }
 
-  
-/* Diseño moderno para la demostración de mensajería */
-body {
-  background: #edf7f5;
-  padding: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Arial, sans-serif;
-}
-
-.app {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  border-radius: 26px;
-  background: #fff;
-  box-shadow: 0 20px 60px rgba(0, 65, 52, 0.15);
-}
-
-.header {
-  padding: 32px 30px 28px;
-  background: linear-gradient(135deg, #087654, #005b4e);
-  color: #fff;
-}
-
-.logo {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 18px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-.header h1 {
-  font-size: clamp(28px, 4vw, 38px);
-  line-height: 1.2;
-}
-
-.header p {
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-.content {
-  padding: 28px 42px 30px;
-}
-
-h2 {
-  font-size: clamp(25px, 3.5vw, 36px);
-  line-height: 1.25;
-}
-
-.description {
-  font-size: 17px;
-  line-height: 1.6;
-}
-
-label {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-select,
-input {
-  min-height: 64px;
-  padding: 16px;
-  border: 1px solid #ccdbe1;
-  border-radius: 15px;
-  font-size: 17px;
-}
-
-.phone {
-  border-radius: 15px;
-  padding: 0 16px;
-}
-
-.phone input {
-  min-height: 60px;
-  font-size: 17px;
-}
-
-.field {
-  margin-bottom: 22px;
-}
-
-button {
-  min-height: 66px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #08bd58, #00b956);
-  color: #fff;
-  font-size: 19px;
-  box-shadow: 0 7px 18px rgba(0, 180, 80, 0.15);
-}
-
-button:hover {
-  background: linear-gradient(90deg, #079e4b, #009e49);
-}
-
-#result {
-  border-radius: 14px;
-  padding: 15px;
-}
-
-.footer {
-  padding: 18px 30px;
-  font-size: 13px;
-}
-
-@media (max-width: 600px) {
-  body {
-    padding: 10px;
-    display: block;
+  /* Respeta la preferencia de movimiento reducido */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
   }
-
-  .app {
-    max-width: 100%;
-    border-radius: 20px;
-    margin: 0 auto;
-  }
-
-  .header {
-    padding: 27px 20px 24px;
-  }
-
-  .logo {
-    width: 78px;
-    height: 78px;
-  }
-
-  .content {
-    padding: 25px 20px;
-  }
-
-  .header p {
-    font-size: 14px;
-  }
-
-  h2 {
-    font-size: 25px;
-  }
-}
-
-/* Dibujos decorativos originales de mensajería */
-body {
-  position: relative;
-  isolation: isolate;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.32;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180' fill='none' stroke='%2386cbb3' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M25 22a15 15 0 0 1 15 15v8l-7-3a15 15 0 1 1-8-20Z'/%3E%3Cpath d='M108 27h28a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8h-10l-8 7v-7h-10a8 8 0 0 1-8-8V35a8 8 0 0 1 8-8Z'/%3E%3Cpath d='M35 113a14 14 0 1 0 28 0 14 14 0 1 0-28 0Z'/%3E%3Cpath d='M43 112h1m10 0h1m-11 6q5 5 10 0'/%3E%3Cpath d='M112 105q-8 0-8 8v10q0 8 8 8h4l8 7v-7h9q8 0 8-8v-10q0-8-8-8Z'/%3E%3Cpath d='M117 115h14m-14 6h9'/%3E%3Ccircle cx='90' cy='83' r='3'/%3E%3Ccircle cx='19' cy='160' r='3'/%3E%3Ccircle cx='160' cy='85' r='4'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 180px 180px;
-}
-
 </style>
+  
 </head>
 
 
