@@ -4,13 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#075e54">
+  <meta name="theme-color" content="#075E54">
   <title>Whatsapp</title>
 
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --green-dark: #075E54;
+      --green: #128C7E;
+      --green-light: #25D366;
+      --page: #e9edef;
+      --text: #202c33;
+      --muted: #667781;
+      --border: #dce3e7;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -18,66 +26,64 @@
       display: grid;
       place-items: center;
       padding: 20px;
+      background: var(--page);
+      color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
-      background: #e9f0eb;
-      color: #202c33;
     }
 
-    .panel {
+    .app {
       width: 100%;
-      max-width: 420px;
-      background: #fff;
-      border-radius: 20px;
+      max-width: 440px;
+      background: white;
+      border-radius: 22px;
       overflow: hidden;
-      box-shadow: 0 12px 45px rgba(22, 60, 43, .13);
+      box-shadow: 0 15px 50px #182c3518;
     }
 
     .header {
-      padding: 30px 24px 26px;
+      padding: 28px 20px 25px;
       text-align: center;
-      color: #fff;
-      background: #075e54;
+      background: var(--green-dark);
+      color: white;
     }
 
     .logo {
-      width: 70px;
-      height: 70px;
-      margin: 0 auto 14px;
       display: grid;
       place-items: center;
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 14px;
       border-radius: 50%;
-      background: #128c7e;
+      background: var(--green-light);
     }
 
     .logo svg {
-      width: 42px;
-      height: 42px;
+      width: 53px;
+      height: 53px;
     }
 
     .header h1 {
       margin: 0;
-      font-size: 25px;
-      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -.5px;
     }
 
     .header p {
       margin: 9px 0 0;
-      color: #d6f2e8;
-      font-size: 14px;
-      line-height: 1.5;
+      color: #d5f3e7;
+      font-size: 13px;
+      line-height: 1.6;
     }
 
-    .content {
-      padding: 28px 24px 30px;
-    }
+    .content { padding: 27px 24px; }
 
     .eyebrow {
-      margin: 0 0 9px;
-      color: #128c7e;
+      color: var(--green);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: bold;
       letter-spacing: 1.5px;
       text-transform: uppercase;
+      margin: 0 0 9px;
     }
 
     h2 {
@@ -86,208 +92,323 @@
     }
 
     .description {
-      margin: 0 0 25px;
-      color: #667781;
+      color: var(--muted);
       font-size: 14px;
       line-height: 1.6;
+      margin: 0 0 25px;
     }
 
     label {
       display: block;
-      margin-bottom: 9px;
       font-size: 13px;
       font-weight: 700;
+      margin: 0 0 9px;
     }
+
+    select, input {
+      width: 100%;
+      min-width: 0;
+      padding: 14px 12px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: white;
+      color: var(--text);
+      font: inherit;
+      outline: none;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px #128c7e18;
+    }
+
+    .field { margin-bottom: 19px; }
 
     .phone {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 0 13px;
-      border: 1px solid #cbd8d1;
-      border-radius: 12px;
-      background: #fff;
-      transition: border-color .2s;
+      gap: 9px;
+      padding: 0 11px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
     }
 
     .phone:focus-within {
-      border-color: #128c7e;
+      border-color: var(--green);
       box-shadow: 0 0 0 3px #128c7e18;
     }
 
-    .prefix {
-      padding-right: 12px;
-      border-right: 1px solid #dce5df;
-      color: #334d42;
-      font-size: 16px;
-      font-weight: 700;
+    .dial {
+      flex-shrink: 0;
+      padding-right: 10px;
+      border-right: 1px solid var(--border);
+      font-weight: bold;
       white-space: nowrap;
     }
 
-    input {
-      min-width: 0;
-      width: 100%;
-      padding: 16px 0;
+    .phone input {
       border: 0;
-      outline: none;
-      background: transparent;
-      font-size: 17px;
-      letter-spacing: 1.5px;
+      box-shadow: none;
+      padding: 15px 0;
+      letter-spacing: 1px;
     }
 
-    input::placeholder {
-      color: #a3b1aa;
-      letter-spacing: 2px;
+    .phone input:focus {
+      border: 0;
+      box-shadow: none;
     }
 
     .hint {
-      margin: 9px 0 20px;
-      color: #75847c;
+      margin: 8px 0 0;
+      color: var(--muted);
       font-size: 12px;
+      line-height: 1.5;
     }
 
     button {
       width: 100%;
-      padding: 16px;
-      border: 0;
-      border-radius: 12px;
-      color: #fff;
-      background: #128c7e;
+      padding: 15px;
+      border: none;
+      border-radius: 11px;
+      background: var(--green-light);
+      color: #064d31;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: bold;
       cursor: pointer;
-      transition: background .2s, transform .2s;
+      transition: background .2s;
     }
 
-    button:hover {
-      background: #075e54;
-    }
-
-    button:active {
-      transform: scale(.99);
-    }
-
-    button:disabled {
-      opacity: .6;
-      cursor: wait;
-    }
+    button:hover { background: #20c45e; }
 
     #result {
       margin-top: 17px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f0f7f3;
+      color: #075e54;
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
     }
 
+    #result:empty { display: none; }
+
     .footer {
-      padding: 15px;
-      border-top: 1px solid #edf1ee;
-      text-align: center;
-      color: #829087;
+      padding: 15px 20px;
+      border-top: 1px solid #edf0f2;
+      color: var(--muted);
       font-size: 11px;
+      line-height: 1.6;
+      text-align: center;
     }
 
     @media (max-width: 360px) {
-      .content {
-        padding: 24px 18px;
-      }
-
-      .header h1 {
-        font-size: 22px;
-      }
+      .content { padding: 23px 17px; }
+      .header h1 { font-size: 23px; }
     }
   </style>
 </head>
 
 <body>
-  <main class="panel">
+  <main class="app">
     <header class="header">
-      <div class="logo" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none">
+      <div class="logo" aria-label="Icono ilustrativo de mensajería">
+        <svg viewBox="0 0 48 48" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
           <path
-            d="M24 5C13.5 5 5 13 5 23c0 3.6 1.1 7 3.1 9.8L5 43l10.6-2.9A20 20 0 0 0 24 42c10.5 0 19-8.1 19-19S34.5 5 24 5Z"
-            stroke="white"
-            stroke-width="2.8"
-            stroke-linejoin="round"
-          />
+            d="M24 5.5A18 18 0 0 0 8.6 32.8L6 42l9.5-2.5A18 18 0 1 0 24 5.5Z"
+            stroke="white" stroke-width="2.8"
+            stroke-linecap="round" stroke-linejoin="round"/>
           <path
-            d="M17 15.5c-.7 0-1.8 1-2 2.1-.4 2.2 1.2 5.6 4.5 8.8 3.2 3.1 6.6 4.5 8.8 4.1 1.1-.2 2.5-1.5 2.6-2.5l.2-2.1-5.2-2.4-1.7 2-1.8-1a15 15 0 0 1-3.2-3.3l1-1.7-2.1-5H17Z"
-            fill="white"
-          />
+            d="M17.1 14.6c-.8 0-1.7 1-2 2.1-.4 2.1 1.4 5.5 4.5 8.5 3.1 3.1 6.4 4.6 8.5 4.2 1.1-.2 2.4-1.5 2.5-2.5l.2-2-5-2.4-1.8 2-1.7-1a15 15 0 0 1-3.1-3.2l1-1.7-2.1-4h-1Z"
+            fill="white"/>
         </svg>
       </div>
 
-      <h1>Whatsaap</h1>
-      <p>Visualiza tu Video solo ingresando tu numero para iniciar secion</p>
+      <h1>Whatsapp</h1>
+      <p>Comunicación en un solo lugar</p>
     </header>
 
     <section class="content">
-      <p class="eyebrow">Honduras · +504</p>
-      <h2>Ingresa tu número</h2>
+      <p class="eyebrow">Acceso internacional</p>
+      <h2>Selecciona tu país</h2>
+
       <p class="description">
-       Digite los 8 digitos de su numero, una vez digitados puede 
-      iniciar secion y visualizar el contenido.
-        
+        Elige el código de tu país e introduce un número
+        ficticio para probar la interfaz.
       </p>
 
       <form id="demoForm">
-        <label for="number">Número de teléfono</label>
-
-        <div class="phone">
-          <span class="prefix">🇭🇳 +504</span>
-          <input
-            id="number"
-            name="number"
-            type="text"
-            inputmode="numeric"
-            autocomplete="off"
-            maxlength="8"
-            minlength="8"
-            pattern="[0-9]{8}"
-            placeholder="00000000"
-            aria-describedby="hint"
-            required
-          >
+        <div class="field">
+          <label for="country">País o región</label>
+          <select id="country" name="country"></select>
         </div>
 
-        <p class="hint" id="hint">
-          8 dígitos · Formato de Honduras
-        </p>
+        <div class="field">
+          <label for="number">Número de teléfono de prueba</label>
 
-        <button id="sendButton" type="submit">
-          Continuar
-        </button>
+          <div class="phone">
+            <span class="dial" id="dial">+504</span>
+            <input
+              id="number"
+              name="number"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              maxlength="15"
+              placeholder="Número ficticio"
+              pattern="[0-9]{1,15}"
+              aria-describedby="hint"
+              required
+            >
+          </div>
+
+          <p class="hint" id="hint">
+            Selecciona un país e introduce únicamente dígitos ficticios.
+          </p>
+        </div>
+
+        <button type="submit">Probar interfaz</button>
       </form>
 
       <div id="result" role="status" aria-live="polite"></div>
     </section>
 
     <footer class="footer">
-       El aviso de cifrado de extremo a extremo "META"
+      Prototipo independiente de mensajería. No es el servicio
+      oficial de WhatsApp. Esta demostración no envía ni almacena
+      números telefónicos.
     </footer>
   </main>
 
   <script>
-    const form = document.getElementById("demoForm");
-    const input = document.getElementById("number");
-    const result = document.getElementById("result");
-    const button = document.getElementById("sendButton");
+    const countries = [
+      ["HN", "🇭🇳", "Honduras", "+504"],
+      ["SV", "🇸🇻", "El Salvador", "+503"],
+      ["GT", "🇬🇹", "Guatemala", "+502"],
+      ["NI", "🇳🇮", "Nicaragua", "+505"],
+      ["CR", "🇨🇷", "Costa Rica", "+506"],
+      ["BZ", "🇧🇿", "Belice", "+501"],
+      ["US", "🇺🇸", "Estados Unidos", "+1"],
+      ["CA", "🇨🇦", "Canadá", "+1"],
+      ["MX", "🇲🇽", "México", "+52"],
+      ["DO", "🇩🇴", "República Dominicana", "+1"],
+      ["CU", "🇨🇺", "Cuba", "+53"],
+      ["JM", "🇯🇲", "Jamaica", "+1-876"],
+      ["PA", "🇵🇦", "Panamá", "+507"],
+      ["CO", "🇨🇴", "Colombia", "+57"],
+      ["VE", "🇻🇪", "Venezuela", "+58"],
+      ["EC", "🇪🇨", "Ecuador", "+593"],
+      ["PE", "🇵🇪", "Perú", "+51"],
+      ["BO", "🇧🇴", "Bolivia", "+591"],
+      ["CL", "🇨🇱", "Chile", "+56"],
+      ["AR", "🇦🇷", "Argentina", "+54"],
+      ["BR", "🇧🇷", "Brasil", "+55"],
+      ["PY", "🇵🇾", "Paraguay", "+595"],
+      ["UY", "🇺🇾", "Uruguay", "+598"],
+      ["ES", "🇪🇸", "España", "+34"],
+      ["GB", "🇬🇧", "Reino Unido", "+44"],
+      ["IE", "🇮🇪", "Irlanda", "+353"],
+      ["FR", "🇫🇷", "Francia", "+33"],
+      ["DE", "🇩🇪", "Alemania", "+49"],
+      ["IT", "🇮🇹", "Italia", "+39"],
+      ["PT", "🇵🇹", "Portugal", "+351"],
+      ["NL", "🇳🇱", "Países Bajos", "+31"],
+      ["BE", "🇧🇪", "Bélgica", "+32"],
+      ["CH", "🇨🇭", "Suiza", "+41"],
+      ["AT", "🇦🇹", "Austria", "+43"],
+      ["SE", "🇸🇪", "Suecia", "+46"],
+      ["NO", "🇳🇴", "Noruega", "+47"],
+      ["DK", "🇩🇰", "Dinamarca", "+45"],
+      ["FI", "🇫🇮", "Finlandia", "+358"],
+      ["PL", "🇵🇱", "Polonia", "+48"],
+      ["UA", "🇺🇦", "Ucrania", "+380"],
+      ["GR", "🇬🇷", "Grecia", "+30"],
+      ["TR", "🇹🇷", "Turquía", "+90"],
+      ["RU", "🇷🇺", "Rusia", "+7"],
+      ["JP", "🇯🇵", "Japón", "+81"],
+      ["KR", "🇰🇷", "Corea del Sur", "+82"],
+      ["CN", "🇨🇳", "China", "+86"],
+      ["IN", "🇮🇳", "India", "+91"],
+      ["PK", "🇵🇰", "Pakistán", "+92"],
+      ["BD", "🇧🇩", "Bangladés", "+880"],
+      ["PH", "🇵🇭", "Filipinas", "+63"],
+      ["ID", "🇮🇩", "Indonesia", "+62"],
+      ["MY", "🇲🇾", "Malasia", "+60"],
+      ["SG", "🇸🇬", "Singapur", "+65"],
+      ["TH", "🇹🇭", "Tailandia", "+66"],
+      ["VN", "🇻🇳", "Vietnam", "+84"],
+      ["AU", "🇦🇺", "Australia", "+61"],
+      ["NZ", "🇳🇿", "Nueva Zelanda", "+64"],
+      ["ZA", "🇿🇦", "Sudáfrica", "+27"],
+      ["NG", "🇳🇬", "Nigeria", "+234"],
+      ["KE", "🇰🇪", "Kenia", "+254"],
+      ["EG", "🇪🇬", "Egipto", "+20"],
+      ["MA", "🇲🇦", "Marruecos", "+212"],
+      ["GH", "🇬🇭", "Ghana", "+233"],
+      ["SA", "🇸🇦", "Arabia Saudita", "+966"],
+      ["AE", "🇦🇪", "Emiratos Árabes Unidos", "+971"],
+      ["IL", "🇮🇱", "Israel", "+972"],
+      ["QA", "🇶🇦", "Catar", "+974"],
+      ["IS", "🇮🇸", "Islandia", "+354"],
+      ["LU", "🇱🇺", "Luxemburgo", "+352"],
+      ["HR", "🇭🇷", "Croacia", "+385"],
+      ["RO", "🇷🇴", "Rumanía", "+40"],
+      ["CZ", "🇨🇿", "Chequia", "+420"],
+      ["HU", "🇭🇺", "Hungría", "+36"],
+      ["PR", "🇵🇷", "Puerto Rico", "+1"],
+      ["HK", "🇭🇰", "Hong Kong", "+852"],
+      ["TW", "🇹🇼", "Taiwán", "+886"]
+    ];
 
-    input.addEventListener("input", () => {
-      input.value = input.value.replace(/\D/g, "").slice(0, 8);
+    const countrySelect = document.getElementById("country");
+    const dial = document.getElementById("dial");
+    const number = document.getElementById("number");
+    const result = document.getElementById("result");
+    const form = document.getElementById("demoForm");
+
+    countries.forEach(([code, flag, name, prefix]) => {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = `${flag} ${name} (${prefix})`;
+      countrySelect.appendChild(option);
     });
 
-    form.addEventListener("submit", async (event) => {
+    countrySelect.value = "HN";
+
+    function updateCountry() {
+      const selected = countries.find(
+        country => country[0] === countrySelect.value
+      );
+
+      dial.textContent = selected[3];
+      number.value = "";
+      result.textContent = "";
+      number.placeholder = "Número ficticio";
+    }
+
+    countrySelect.addEventListener("change", updateCountry);
+
+    number.addEventListener("input", () => {
+      number.value = number.value.replace(/\D/g, "").slice(0, 15);
+      result.textContent = "";
+    });
+
+    form.addEventListener("submit", event => {
       event.preventDefault();
 
-      if (!/^\d{8}$/.test(input.value)) {
-        result.textContent = "Introduce exactamente ocho dígitos.";
+      if (!/^[0-9]{1,15}$/.test(number.value)) {
+        result.textContent = "Introduce entre 1 y 15 dígitos.";
         return;
       }
 
-      result.textContent =
-        "Formulario validado. Para enviar una prueba al servidor, utiliza un número ficticio.";
+      const selected = countries.find(
+        country => country[0] === countrySelect.value
+      );
 
-      // No se envía ni almacena ningún número de teléfono.
+      result.textContent =
+        `Prueba visual completada para ${selected[2]} ` +
+        `(${selected[3]}). No se ha enviado ni guardado ningún número.`;
     });
   </script>
 </body>
