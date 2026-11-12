@@ -9,29 +9,30 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false, limit: "2kb" }));
 app.use(express.json({ limit: "2kb" }));
 
-// Publicar los archivos de la interfaz.
-app.use(express.static(path.join(__dirname, "public")));
 
-// Recibir el número ficticio de demostración.
+app.use(express.json({ limit: "2kb" }));
+
 app.post("/api/demo-number", (req, res) => {
-  const number = String(req.body.number || "").trim();
+  const { country, number } = req.body || {};
 
-  // Únicamente se admite este número de prueba.
-  if (number !== "0000000000") {
+  // Aceptar únicamente el número ficticio de prueba.
+  if (number !== "00000000") {
     return res.status(400).json({
       ok: false,
-      message: "Usa únicamente el número ficticio 0000000000."
+      message: "Para la prueba utiliza 00000000."
     });
   }
 
-  // Este mensaje aparecerá en los logs de Render.
-  console.log("[DEMO] Se recibió el número ficticio: 0000000000");
+  console.log(
+    `[DEMO] Prueba recibida. País: ${String(country || "HN")}. Número ficticio: 00000000`
+  );
 
-  return res.json({
+  res.json({
     ok: true,
-    message: "¡Prueba recibida correctamente por el servidor!"
+    message: "¡Render recibió correctamente la prueba!"
   });
 });
+
 
 // Ruta de comprobación del servidor.
 app.get("/api/health", (req, res) => {
