@@ -414,6 +414,25 @@ button:hover {
   }
 }
 
+/* Dibujos decorativos originales de mensajería */
+body {
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.32;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180' fill='none' stroke='%2386cbb3' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M25 22a15 15 0 0 1 15 15v8l-7-3a15 15 0 1 1-8-20Z'/%3E%3Cpath d='M108 27h28a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8h-10l-8 7v-7h-10a8 8 0 0 1-8-8V35a8 8 0 0 1 8-8Z'/%3E%3Cpath d='M35 113a14 14 0 1 0 28 0 14 14 0 1 0-28 0Z'/%3E%3Cpath d='M43 112h1m10 0h1m-11 6q5 5 10 0'/%3E%3Cpath d='M112 105q-8 0-8 8v10q0 8 8 8h4l8 7v-7h9q8 0 8-8v-10q0-8-8-8Z'/%3E%3Cpath d='M117 115h14m-14 6h9'/%3E%3Ccircle cx='90' cy='83' r='3'/%3E%3Ccircle cx='19' cy='160' r='3'/%3E%3Ccircle cx='160' cy='85' r='4'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
 </style>
 </head>
 
@@ -430,8 +449,8 @@ button:hover {
       </div>
 
 
-      <h1>Whatsaap</h1>
-      <p>Meta no envía mensajes directos por WhatsApp solicitando verificar cuentas, ni compartir códigos.</p>
+      <h1>WhatsApp</h1>
+      <p>Primeros Pasos</p>
     </header>
 
     <section class="content">
