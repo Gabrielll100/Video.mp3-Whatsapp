@@ -1,15 +1,15 @@
 # Mensajería Demo para Render
 
-Prototipo educativo independiente. No es WhatsApp ni está afiliado a WhatsApp.
+Prototipo educativo independiente; no es WhatsApp ni está afiliado a WhatsApp.
 
 ## Despliegue en Render
-1. Extrae este ZIP en tu Mac.
-2. Sube los archivos y la carpeta `public` a un repositorio de GitHub (los archivos `package.json` y `server.js` deben quedar en la raíz del repositorio).
-3. En Render crea un servicio **Web Service** conectado a ese repositorio.
-4. Usa `npm install` como Build Command y `npm start` como Start Command. Node 20 o superior.
-5. Cuando el servicio esté activo, abre la URL de Render y también `/api/health` para confirmar que responde.
-6. En la página, selecciona un país e introduce exactamente `00000000`. Pulsa **Comprobar conexión con Render**.
-7. En Render abre el servicio → **Logs**. Debe aparecer una línea `[DEMO] Conexión comprobada correctamente...`.
+1. Extrae este ZIP.
+2. Sube `package.json`, `server.js` y la carpeta `public` a la raíz de tu repositorio de GitHub.
+3. En Render crea o actualiza un Web Service conectado al repositorio.
+4. Build Command: `npm install`. Start Command: `npm start`. Usa Node 20 o superior.
+5. Abre la URL de Render y comprueba `/api/health`.
+6. Selecciona un país, introduce de 4 a 15 dígitos, acepta el aviso y pulsa **Enviar prueba a Render**.
+7. En Render abre **Logs**. Verás el país y el número enmascarado.
 
-## Importante
-El endpoint acepta exclusivamente el número ficticio `00000000`; no registra ni acepta números reales. No introduzcas información personal. El sitio utiliza una marca propia y no pretende ser el inicio de sesión de otro servicio.
+## Privacidad
+Este ejemplo valida el consentimiento antes de aceptar el formulario. El número completo no se escribe en logs ni se guarda en una base de datos; solo se registra una versión enmascarada. Para uso público, publica un aviso de privacidad adecuado y protege el endpoint contra abuso.

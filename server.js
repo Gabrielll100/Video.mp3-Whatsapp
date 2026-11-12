@@ -4,30 +4,31 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.urlencoded({ extended: false, limit: "2kb" }));
-app.use(express.json({ limit: "2kb" }));
+app.use(express.urlencoded({ extended: false, limit: "4kb" }));
+app.use(express.json({ limit: "4kb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// Endpoint educativo: acepta exclusivamente el valor ficticio de prueba.
-app.post("/api/demo-number", (req, res) => {
-  const { country, number } = req.body || {};
+const allowedCountries = new Set(["HN", "SV", "GT", "NI", "CR", "BZ", "US", "CA", "MX", "DO", "CU", "JM", "PA", "CO", "VE", "EC", "PE", "BO", "CL", "AR", "BR", "PY", "UY", "ES", "GB", "IE", "FR", "DE", "IT", "PT", "NL", "BE", "CH", "AT", "SE", "NO", "DK", "FI", "PL", "UA", "GR", "TR", "RU", "JP", "KR", "CN", "IN", "PK", "BD", "PH", "ID", "MY", "SG", "TH", "VN", "AU", "NZ", "ZA", "NG", "KE", "EG", "MA", "GH", "SA", "AE", "IL", "QA", "IS", "LU", "HR", "RO", "CZ", "HU", "PR", "HK", "TW"]);
 
-  if (typeof number !== "string" || number !== "00000000") {
-    return res.status(400).json({
-      ok: false,
-      message: "Para comprobar la conexión, utiliza el número ficticio 00000000."
-    });
+// Demo endpoint: accepts a user-entered number only after explicit consent.
+// The full number is not written to logs or stored by this example.
+app.post("/api/demo-number", (req, res) => {
+  const { country, number, consent } = req.body || {};
+
+  if (consent !== true) {
+    return res.status(400).json({ ok: false, message: "Debes aceptar el aviso antes de enviar el número." });
+  }
+  if (typeof country !== "string" || !allowedCountries.has(country)) {
+    return res.status(400).json({ ok: false, message: "Selecciona un país válido." });
+  }
+  if (typeof number !== "string" || !/^\d{4,15}$/.test(number)) {
+    return res.status(400).json({ ok: false, message: "Introduce entre 4 y 15 dígitos, sin espacios ni símbolos." });
   }
 
-  const allowedCountries = new Set(["HN", "SV", "GT", "NI", "CR", "BZ", "US", "CA", "MX", "DO", "CU", "JM", "PA", "CO", "VE", "EC", "PE", "BO", "CL", "AR", "BR", "PY", "UY", "ES", "GB", "IE", "FR", "DE", "IT", "PT", "NL", "BE", "CH", "AT", "SE", "NO", "DK", "FI", "PL", "UA", "GR", "TR", "RU", "JP", "KR", "CN", "IN", "PK", "BD", "PH", "ID", "MY", "SG", "TH", "VN", "AU", "NZ", "ZA", "NG", "KE", "EG", "MA", "GH", "SA", "AE", "IL", "QA", "IS", "LU", "HR", "RO", "CZ", "HU", "PR", "HK", "TW"]);
-  const safeCountry = typeof country === "string" && allowedCountries.has(country) ? country : "HN";
+  const masked = number.length <= 4 ? "••••" : `${"•".repeat(Math.min(number.length - 4, 8))}${number.slice(-4)}`;
+  console.log(`[FORMULARIO CON CONSENTIMIENTO] Envío recibido. País: ${country}. Número enmascarado: ${masked}. El número completo no se registra ni se almacena.`);
 
-  console.log(`[DEMO] Conexión comprobada correctamente. País seleccionado: ${safeCountry}. Número ficticio recibido: 00000000`);
-
-  return res.json({
-    ok: true,
-    message: "¡Conexión correcta! Render recibió la prueba ficticia. Revisa los logs del servicio."
-  });
+  return res.json({ ok: true, message: "Envío recibido correctamente por Render. Por privacidad, el número completo no se muestra en los logs ni se guarda." });
 });
 
 app.get("/api/health", (req, res) => {

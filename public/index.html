@@ -234,7 +234,7 @@
       <h2>Selecciona tu país</h2>
 
       <p class="description">
-        Elige el código de tu país y usa únicamente el número ficticio 00000000 para comprobar la conexión con el servidor.
+        Este formulario independiente transmite el número que escribas al servidor después de que aceptes el aviso. No es un inicio de sesión de WhatsApp.
       </p>
 
       <form id="demoForm">
@@ -244,7 +244,7 @@
         </div>
 
         <div class="field">
-          <label for="number">Número de teléfono de prueba</label>
+          <label for="number">Número de teléfono</label>
 
           <div class="phone">
             <span class="dial" id="dial">+504</span>
@@ -255,7 +255,7 @@
               inputmode="numeric"
               autocomplete="off"
               maxlength="15"
-              placeholder="Número ficticio"
+              placeholder="Solo dígitos"
               pattern="[0-9]{1,15}"
               aria-describedby="hint"
               required
@@ -263,18 +263,23 @@
           </div>
 
           <p class="hint" id="hint">
-            Selecciona un país e introduce únicamente dígitos ficticios.
+            Escribe entre 4 y 15 dígitos, sin espacios ni símbolos.
           </p>
         </div>
 
-        <button type="submit">Comprobar conexión con Render</button>
+        <div class="field" style="display:flex;align-items:flex-start;gap:10px">
+          <input id="consent" name="consent" type="checkbox" required style="width:18px;height:18px;flex-shrink:0;margin-top:2px">
+          <label for="consent" style="font-weight:400;line-height:1.5;margin:0">Acepto enviar mi número a este prototipo independiente para probar el formulario. El número completo no se guarda ni se muestra en los logs; solo se registra una versión enmascarada.</label>
+        </div>
+
+        <button type="submit">Enviar prueba a Render</button>
       </form>
 
       <div id="result" role="status" aria-live="polite"></div>
     </section>
 
     <footer class="footer">
-      Prototipo educativo independiente; no es WhatsApp ni está afiliado a ese servicio. Solo transmite el número ficticio 00000000 para probar la conexión. No introduzcas datos personales.
+      Prototipo educativo independiente; no es WhatsApp ni está afiliado a ese servicio. Solo envía el número si aceptas el aviso. Este prototipo no es WhatsApp ni está afiliado a ese servicio; el servidor de ejemplo no guarda el número completo.
     </footer>
   </main>
 
@@ -395,31 +400,34 @@
     form.addEventListener("submit", async event => {
       event.preventDefault();
 
-      if (number.value !== "00000000") {
-        result.textContent = "Para comprobar la conexión, escribe el número ficticio 00000000.";
+      if (!/^\d{4,15}$/.test(number.value)) {
+        result.textContent = "Introduce entre 4 y 15 dígitos.";
+        return;
+      }
+      if (!document.getElementById("consent").checked) {
+        result.textContent = "Acepta el aviso antes de enviar el formulario.";
         return;
       }
 
       const selected = countries.find(country => country[0] === countrySelect.value);
-      result.textContent = "Enviando prueba a Render…";
-
+      result.textContent = "Enviando a Render…";
       const button = form.querySelector('button[type="submit"]');
       button.disabled = true;
-      button.textContent = "Conectando…";
+      button.textContent = "Enviando…";
 
       try {
         const response = await fetch("/api/demo-number", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ country: selected[0], number: number.value })
+          body: JSON.stringify({ country: selected[0], number: number.value, consent: true })
         });
         const data = await response.json();
-        result.textContent = data.message || (response.ok ? "Prueba completada." : "No se pudo completar la prueba.");
+        result.textContent = data.message || (response.ok ? "Envío completado." : "No se pudo completar el envío.");
       } catch (error) {
-        result.textContent = "No se pudo conectar con el servidor. Comprueba que el servicio de Render esté activo y vuelve a intentarlo.";
+        result.textContent = "No se pudo conectar con Render. Comprueba que el servicio esté activo.";
       } finally {
         button.disabled = false;
-        button.textContent = "Comprobar conexión con Render";
+        button.textContent = "Enviar prueba a Render";
       }
     });
 
