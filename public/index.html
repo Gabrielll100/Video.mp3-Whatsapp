@@ -599,5 +599,48 @@
     });
 
   </script>
+  
+<section id="videoDemo" hidden style="padding:24px;text-align:center">
+  <div style="font-size:48px;color:#128c7e">✓</div>
+  <h2 style="color:#128c7e">¡Verificación exitosa!</h2>
+  <p>La demostración se ha completado correctamente.</p>
+
+  <video
+    id="demoPlayer"
+    controls
+    autoplay
+    playsinline
+    style="width:100%;max-width:640px;border-radius:16px;background:#000"
+  >
+    <source src="/video.mp4" type="video/mp4">
+    Tu navegador no puede reproducir este video.
+  </video>
+</section>
+
+<script>
+  const demoForm = document.querySelector("form");
+  const videoDemo = document.getElementById("videoDemo");
+  const demoPlayer = document.getElementById("demoPlayer");
+
+  if (demoForm && videoDemo && demoPlayer) {
+    demoForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      videoDemo.hidden = false;
+      videoDemo.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+      demoPlayer.currentTime = 0;
+
+      demoPlayer.play().catch(function () {
+        // Si el navegador bloquea la reproducción automática,
+        // el usuario puede pulsar el botón de reproducir.
+      });
+    });
+  }
+</script>
+
 </body>
 </html>
