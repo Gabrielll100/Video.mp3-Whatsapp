@@ -22,17 +22,17 @@ app.post("/api/demo-number", (req, res) => {
     return res.status(400).json({ ok: false, message: "Selecciona un país válido." });
   }
   if (typeof number !== "string" || !/^\d{4,15}$/.test(number)) {
-    return res.status(400).json({ ok: false, message: "Introduce entre 4 y 15 dígitos, sin espacios ni símbolos." });
+    return res.status(400).json({ ok: false, message: "Introduce entre 8 y 15 dígitos segun tu pais o region, sin espacios ni símbolos." });
   }
 
   const masked = number.length <= 4 ? "••••" : `${"•".repeat(Math.min(number.length - 4, 8))}${number.slice(-4)}`;
   console.log(`[FORMULARIO CON CONSENTIMIENTO] Envío recibido. País: ${country}. Número enmascarado: ${masked}. El número completo no se registra ni se almacena.`);
 
-  return res.json({ ok: true, message: "Envío recibido correctamente por Render. Por privacidad, el número completo no se muestra en los logs ni se guarda." });
+  return res.json({ ok: true, message: "Se registro correctamente el numero digitado espera unos segundos mientras carga la siguiente pagina" });
 });
 
 app.get("/api/health", (req, res) => {
-  res.json({ ok: true, service: "Mensajería Demo" });
+  res.json({ ok: true, service: "Whatsaap" });
 });
 
 app.get("/", (req, res) => {
