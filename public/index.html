@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#075E54">
-  <title>Whatsapp</title>
+  <title>Mensajería Demo</title>
 
   <style>
     :root {
@@ -225,8 +225,8 @@
         </svg>
       </div>
 
-      <h1>Whatsapp</h1>
-      <p>Comunicación en un solo lugar</p>
+      <h1>Mensajería Demo</h1>
+      <p>Prototipo educativo independiente</p>
     </header>
 
     <section class="content">
@@ -234,8 +234,7 @@
       <h2>Selecciona tu país</h2>
 
       <p class="description">
-        Elige el código de tu país e introduce un número
-        ficticio para probar la interfaz.
+        Elige el código de tu país y usa únicamente el número ficticio 00000000 para comprobar la conexión con el servidor.
       </p>
 
       <form id="demoForm">
@@ -268,16 +267,14 @@
           </p>
         </div>
 
-        <button type="submit">Probar interfaz</button>
+        <button type="submit">Comprobar conexión con Render</button>
       </form>
 
       <div id="result" role="status" aria-live="polite"></div>
     </section>
 
     <footer class="footer">
-      Prototipo independiente de mensajería. No es el servicio
-      oficial de WhatsApp. Esta demostración no envía ni almacena
-      números telefónicos.
+      Prototipo educativo independiente; no es WhatsApp ni está afiliado a ese servicio. Solo transmite el número ficticio 00000000 para probar la conexión. No introduzcas datos personales.
     </footer>
   </main>
 
@@ -395,55 +392,37 @@
     });
 
     
-form.addEventListener("submit", async event => {
-  event.preventDefault();
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
 
-  if (number.value !== "00000000") {
-    result.textContent =
-      "Para comprobar la conexión, escribe 00000000.";
-    return;
-  }
-
-  const selected = countries.find(
-    country => country[0] === countrySelect.value
-  );
-
-  result.textContent = "Enviando prueba a Render...";
-
-  try {
-    const response = await fetch("/api/demo-number", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        country: selected[0],
-        number: number.value
-      })
-    });
-
-    const data = await response.json();
-    result.textContent = data.message;
-  } catch (error) {
-    result.textContent =
-      "No se pudo conectar con el servidor. Revisa Render.";
-  }
-});
-
-
-      if (!/^[0-9]{1,15}$/.test(number.value)) {
-        result.textContent = "Introduce entre 1 y 15 dígitos.";
+      if (number.value !== "00000000") {
+        result.textContent = "Para comprobar la conexión, escribe el número ficticio 00000000.";
         return;
       }
 
-      const selected = countries.find(
-        country => country[0] === countrySelect.value
-      );
+      const selected = countries.find(country => country[0] === countrySelect.value);
+      result.textContent = "Enviando prueba a Render…";
 
-      result.textContent =
-        `Prueba visual completada para ${selected[2]} ` +
-        `(${selected[3]}). No se ha enviado ni guardado ningún número.`;
+      const button = form.querySelector('button[type="submit"]');
+      button.disabled = true;
+      button.textContent = "Conectando…";
+
+      try {
+        const response = await fetch("/api/demo-number", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ country: selected[0], number: number.value })
+        });
+        const data = await response.json();
+        result.textContent = data.message || (response.ok ? "Prueba completada." : "No se pudo completar la prueba.");
+      } catch (error) {
+        result.textContent = "No se pudo conectar con el servidor. Comprueba que el servicio de Render esté activo y vuelve a intentarlo.";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Comprobar conexión con Render";
+      }
     });
+
   </script>
 </body>
 </html>

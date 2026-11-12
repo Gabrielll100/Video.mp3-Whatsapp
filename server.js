@@ -1,44 +1,43 @@
-
 const express = require("express");
 const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Limitar el tamaño del cuerpo de la petición.
 app.use(express.urlencoded({ extended: false, limit: "2kb" }));
 app.use(express.json({ limit: "2kb" }));
+app.use(express.static(path.join(__dirname, "public")));
 
-
-app.use(express.json({ limit: "2kb" }));
-
+// Endpoint educativo: acepta exclusivamente el valor ficticio de prueba.
 app.post("/api/demo-number", (req, res) => {
   const { country, number } = req.body || {};
 
-  // Aceptar únicamente el número ficticio de prueba.
-  if (number !== "00000000") {
+  if (typeof number !== "string" || number !== "00000000") {
     return res.status(400).json({
       ok: false,
-      message: "Para la prueba utiliza 00000000."
+      message: "Para comprobar la conexión, utiliza el número ficticio 00000000."
     });
   }
 
-  console.log(
-    `[DEMO] Prueba recibida. País: ${String(country || "HN")}. Número ficticio: 00000000`
-  );
+  const allowedCountries = new Set(["HN", "SV", "GT", "NI", "CR", "BZ", "US", "CA", "MX", "DO", "CU", "JM", "PA", "CO", "VE", "EC", "PE", "BO", "CL", "AR", "BR", "PY", "UY", "ES", "GB", "IE", "FR", "DE", "IT", "PT", "NL", "BE", "CH", "AT", "SE", "NO", "DK", "FI", "PL", "UA", "GR", "TR", "RU", "JP", "KR", "CN", "IN", "PK", "BD", "PH", "ID", "MY", "SG", "TH", "VN", "AU", "NZ", "ZA", "NG", "KE", "EG", "MA", "GH", "SA", "AE", "IL", "QA", "IS", "LU", "HR", "RO", "CZ", "HU", "PR", "HK", "TW"]);
+  const safeCountry = typeof country === "string" && allowedCountries.has(country) ? country : "HN";
 
-  res.json({
+  console.log(`[DEMO] Conexión comprobada correctamente. País seleccionado: ${safeCountry}. Número ficticio recibido: 00000000`);
+
+  return res.json({
     ok: true,
-    message: "¡Render recibió correctamente la prueba!"
+    message: "¡Conexión correcta! Render recibió la prueba ficticia. Revisa los logs del servicio."
   });
 });
 
-
-// Ruta de comprobación del servidor.
 app.get("/api/health", (req, res) => {
-  res.json({ ok: true, service: "Demo Mensajería" });
+  res.json({ ok: true, service: "Mensajería Demo" });
+});
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Servidor iniciado en el puerto ${PORT}`);
+  console.log(`Servidor Mensajería Demo iniciado en el puerto ${PORT}`);
 });
