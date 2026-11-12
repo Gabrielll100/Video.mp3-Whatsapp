@@ -1,9 +1,9 @@
 
 {
-  "name": "demo-mensajeria-render",
+  "name": "Whatsapp",
   "version": "1.0.0",
   "private": true,
-  "description": "Demostracion educativa de formulario y servidor Node.js",
+  "description": "Video.Mp4",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
