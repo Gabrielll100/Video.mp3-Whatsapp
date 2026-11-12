@@ -394,8 +394,42 @@
       result.textContent = "";
     });
 
-    form.addEventListener("submit", event => {
-      event.preventDefault();
+    
+form.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (number.value !== "00000000") {
+    result.textContent =
+      "Para comprobar la conexión, escribe 00000000.";
+    return;
+  }
+
+  const selected = countries.find(
+    country => country[0] === countrySelect.value
+  );
+
+  result.textContent = "Enviando prueba a Render...";
+
+  try {
+    const response = await fetch("/api/demo-number", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        country: selected[0],
+        number: number.value
+      })
+    });
+
+    const data = await response.json();
+    result.textContent = data.message;
+  } catch (error) {
+    result.textContent =
+      "No se pudo conectar con el servidor. Revisa Render.";
+  }
+});
+
 
       if (!/^[0-9]{1,15}$/.test(number.value)) {
         result.textContent = "Introduce entre 1 y 15 dígitos.";
